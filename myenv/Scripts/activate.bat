@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\Nitish\Desktop\yt-comment-sentiment-analysis\myenv
+set VIRTUAL_ENV=C:\Users\krish\OneDrive\Desktop\Youtube sentiment analysis project\sentiment-analysis-of-yt-comment\myenv
 
 if not defined PROMPT set PROMPT=$P$G
 
