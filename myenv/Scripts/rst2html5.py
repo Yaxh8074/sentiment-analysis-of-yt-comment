@@ -1,4 +1,4 @@
-#!C:\Users\Nitish\Desktop\yt-comment-sentiment-analysis\myenv\Scripts\python.exe
+#!C:\Users\krish\OneDrive\Desktop\Youtube sentiment analysis project\sentiment-analysis-of-yt-comment\myenv\Scripts\python.exe
 # -*- coding: utf8 -*-
 # :Copyright: © 2015 Günter Milde.
 # :License: Released under the terms of the `2-Clause BSD license`_, in short:

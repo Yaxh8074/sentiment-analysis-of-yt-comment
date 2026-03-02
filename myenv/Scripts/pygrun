@@ -1,4 +1,4 @@
-#!C:\Users\Nitish\Desktop\yt-comment-sentiment-analysis\myenv\Scripts\python.exe
+#!C:\Users\krish\OneDrive\Desktop\Youtube sentiment analysis project\sentiment-analysis-of-yt-comment\myenv\Scripts\python.exe
 __author__ = 'jszheng'
 import optparse
 import sys

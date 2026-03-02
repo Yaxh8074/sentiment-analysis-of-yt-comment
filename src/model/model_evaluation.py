@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import json
 from mlflow.models import infer_signature
+import dagshub
 
 # logging configuration
 logger = logging.getLogger('model_evaluation')
@@ -112,12 +113,10 @@ def log_confusion_matrix(cm, dataset_name):
 def save_model_info(run_id: str, model_path: str, file_path: str) -> None:
     """Save the model run ID and path to a JSON file."""
     try:
-        # Create a dictionary with the info you want to save
         model_info = {
             'run_id': run_id,
             'model_path': model_path
         }
-        # Save the dictionary as a JSON file
         with open(file_path, 'w') as file:
             json.dump(model_info, file, indent=4)
         logger.debug('Model info saved to %s', file_path)
@@ -127,7 +126,23 @@ def save_model_info(run_id: str, model_path: str, file_path: str) -> None:
 
 
 def main():
-    mlflow.set_tracking_uri("http://ec2-54-196-109-131.compute-1.amazonaws.com:5000/")
+    # -------------------------------------------------------------------------
+    # DagsHub MLflow Tracking Setup
+    # -------------------------------------------------------------------------
+    DAGSHUB_USERNAME = os.environ.get('DAGSHUB_USERNAME', 'Yaxh8074')
+    DAGSHUB_TOKEN = os.environ.get('DAGSHUB_TOKEN')
+    DAGSHUB_REPO = 'youtube-comment-analysis'  # Replace with your actual DagsHub repo name
+
+    # Initialize DagsHub integration (auto-configures MLflow tracking URI)
+    dagshub.init(
+        repo_owner=DAGSHUB_USERNAME,
+        repo_name=DAGSHUB_REPO,
+        mlflow=True
+    )
+    # -------------------------------------------------------------------------
+    # AWS EC2 MLflow Tracking (commented out)
+    # mlflow.set_tracking_uri("http://ec2-54-196-109-131.compute-1.amazonaws.com:5000/")
+    # -------------------------------------------------------------------------
 
     mlflow.set_experiment('dvc-pipeline-runs')
     
@@ -153,17 +168,17 @@ def main():
             y_test = test_data['category'].values
 
             # Create a DataFrame for signature inference (using first few rows as an example)
-            input_example = pd.DataFrame(X_test_tfidf.toarray()[:5], columns=vectorizer.get_feature_names_out())  # <--- Added for signature
+            input_example = pd.DataFrame(X_test_tfidf.toarray()[:5], columns=vectorizer.get_feature_names_out())
 
             # Infer the signature
-            signature = infer_signature(input_example, model.predict(X_test_tfidf[:5]))  # <--- Added for signature
+            signature = infer_signature(input_example, model.predict(X_test_tfidf[:5]))
 
             # Log model with signature
             mlflow.sklearn.log_model(
                 model,
                 "lgbm_model",
-                signature=signature,  # <--- Added for signature
-                input_example=input_example  # <--- Added input example
+                signature=signature,
+                input_example=input_example
             )
 
             # Save model info

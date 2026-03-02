@@ -4,9 +4,23 @@ import json
 import mlflow
 import logging
 import os
+import dagshub
 
-# Set up MLflow tracking URI
-mlflow.set_tracking_uri("http://ec2-54-196-109-131.compute-1.amazonaws.com:5000/")
+# -------------------------------------------------------------------------
+# DagsHub MLflow Tracking Setup
+# -------------------------------------------------------------------------
+DAGSHUB_USERNAME = os.environ.get('DAGSHUB_USERNAME', 'Yaxh8074')
+DAGSHUB_REPO = 'youtube-comment-analysis'  # Replace with your actual DagsHub repo name
+
+dagshub.init(
+    repo_owner=DAGSHUB_USERNAME,
+    repo_name=DAGSHUB_REPO,
+    mlflow=True
+)
+# -------------------------------------------------------------------------
+# AWS EC2 MLflow Tracking (commented out)
+# mlflow.set_tracking_uri("http://ec2-54-196-109-131.compute-1.amazonaws.com:5000/")
+# -------------------------------------------------------------------------
 
 
 # logging configuration
@@ -26,6 +40,7 @@ file_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
+
 def load_model_info(file_path: str) -> dict:
     """Load the model info from a JSON file."""
     try:
@@ -39,6 +54,7 @@ def load_model_info(file_path: str) -> dict:
     except Exception as e:
         logger.error('Unexpected error occurred while loading the model info: %s', e)
         raise
+
 
 def register_model(model_name: str, model_info: dict):
     """Register the model to the MLflow Model Registry."""
@@ -61,6 +77,7 @@ def register_model(model_name: str, model_info: dict):
         logger.error('Error during model registration: %s', e)
         raise
 
+
 def main():
     try:
         model_info_path = 'experiment_info.json'
@@ -71,6 +88,7 @@ def main():
     except Exception as e:
         logger.error('Failed to complete the model registration process: %s', e)
         print(f"Error: {e}")
+
 
 if __name__ == '__main__':
     main()

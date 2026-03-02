@@ -1,4 +1,4 @@
-#!C:\Users\Nitish\Desktop\yt-comment-sentiment-analysis\myenv\Scripts\python.exe
+#!C:\Users\krish\OneDrive\Desktop\Youtube sentiment analysis project\sentiment-analysis-of-yt-comment\myenv\Scripts\python.exe
 
 # $Id: rst2xetex.py 7847 2015-03-17 17:30:47Z milde $
 # Author: Guenter Milde

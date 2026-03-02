@@ -1,4 +1,4 @@
-#!C:\Users\Nitish\Desktop\yt-comment-sentiment-analysis\myenv\Scripts\python.exe
+#!C:\Users\krish\OneDrive\Desktop\Youtube sentiment analysis project\sentiment-analysis-of-yt-comment\myenv\Scripts\python.exe
 
 # $Id: rst2latex.py 5905 2009-04-16 12:04:49Z milde $
 # Author: David Goodger <goodger@python.org>

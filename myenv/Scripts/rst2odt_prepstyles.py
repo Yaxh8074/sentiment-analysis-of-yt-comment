@@ -1,4 +1,4 @@
-#!C:\Users\Nitish\Desktop\yt-comment-sentiment-analysis\myenv\Scripts\python.exe
+#!C:\Users\krish\OneDrive\Desktop\Youtube sentiment analysis project\sentiment-analysis-of-yt-comment\myenv\Scripts\python.exe
 
 # $Id: rst2odt_prepstyles.py 8346 2019-08-26 12:11:32Z milde $
 # Author: Dave Kuhlman <dkuhlman@rexx.com>
