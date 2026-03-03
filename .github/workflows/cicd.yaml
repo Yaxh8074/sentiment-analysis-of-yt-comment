@@ -6,6 +6,11 @@ jobs:
   model-deployment:
     runs-on: ubuntu-latest
 
+    # Set env vars globally for ALL steps at once
+    env:
+      DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
+      DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -28,16 +33,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run pipeline
-        env:
-          DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
-          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
           dvc repro
 
       - name: Push DVC-tracked data to remote
-        env:
-          DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
-          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
           dvc push
 
@@ -60,9 +59,6 @@ jobs:
           pip install pytest
 
       - name: Run tests
-        env:
-          DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
-          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
           pytest scripts/test_load_model.py
           pytest scripts/test_model_signature.py
@@ -70,7 +66,4 @@ jobs:
 
       - name: Promote model to production
         if: success()
-        env:
-          DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
-          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: python scripts/promote_model.py
